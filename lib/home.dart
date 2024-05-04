@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:latent/encode.dart';
+import 'package:latent/decode.dart';
+import 'package:latent/recentpage.dart';
+import 'package:latent/scroll.dart';
+import 'package:latent/stegpage.dart';
 
-class homePage extends StatelessWidget {
-  const homePage({super.key});
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xff131512),
       body: Container(
-        padding: const EdgeInsets.all(25),
+        padding: const EdgeInsets.all(23),
         child: Column(
           children: <Widget>[
-            SizedBox(
+            //add inkwell here
+
+            const SizedBox(
               height: 10,
             ),
             Align(
@@ -20,69 +28,92 @@ class homePage extends StatelessWidget {
                   Icons.menu,
                   size: 35,
                 ),
-                color: const Color(0xff9FE870),
+                color: const Color.fromARGB(255, 98, 101, 97),
                 onPressed: () {
-                  // go home
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => StegPage()),
+                  );
                 },
               ),
             ),
             const SizedBox(height: 65),
             Align(
               alignment: Alignment.centerLeft,
-              child: Text("Let us Find out,\nShall we?",
+              child: Text(" Let's find out,\n Shall we?",
                   style: Theme.of(context).textTheme.titleLarge),
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 40),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Expanded(
                   child: Stack(
                     children: [
-                      Container(
-                        // width: 160,
-                        height: 208,
-                        decoration: BoxDecoration(
-                          color: const Color(0xff839776),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const Padding(padding: EdgeInsets.all(8)),
-                            RichText(
-                              textAlign: TextAlign.left,
-                              textDirection: TextDirection
-                                  .ltr, // set text direction to rtl
-                              text: const TextSpan(
-                                text: 'Encode',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(0xff9FE870),
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const EncodePage()),
+                          );
+                        }, // Handle your callback
+                        child: Container(
+                          width: double.infinity,
+                          height: 228,
+                          decoration: BoxDecoration(
+                            color: const Color(0x6E839776),
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Color(0x33A5FF6A),
+                                blurRadius: 40.0,
+                                spreadRadius: 0,
+                                offset: Offset(
+                                  -2,
+                                  0,
                                 ),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                    text: '\nImage\n',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 10,
-                                      color: Colors.white,
-                                    ),
+                              )
+                            ],
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              const Padding(padding: EdgeInsets.all(8)),
+                              RichText(
+                                textAlign: TextAlign.left,
+                                textDirection: TextDirection
+                                    .ltr, // set text direction to rtl
+                                text: const TextSpan(
+                                  text: 'Encode',
+                                  style: TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.w600,
+                                    color: Color(0xff9FE870),
                                   ),
-                                ],
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                      text: '\nImage\n',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.normal,
+                                        fontSize: 14,
+                                        color: Color(0xffA5C58D),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                       Positioned(
-                        top: 12,
-                        left: 12,
+                        top: 16,
+                        left: 16,
                         child: Container(
-                          width: 40,
-                          height: 40,
+                          width: 50,
+                          height: 50,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             border: Border.all(
@@ -93,63 +124,81 @@ class homePage extends StatelessWidget {
                           child: const Icon(
                             Icons.arrow_upward,
                             color: Color(0xff9FE870),
-                            size: 24,
+                            size: 30,
                           ),
                         ),
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(width: 20),
+                const SizedBox(width: 24),
                 Expanded(
-                  // 2nd container for encode
-
                   child: Stack(
                     children: [
-                      Container(
-                        // width: 160,
-                        height: 208,
-                        decoration: BoxDecoration(
-                          color: const Color(0xff839776),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const Padding(padding: EdgeInsets.all(8)),
-                            RichText(
-                              textAlign: TextAlign.left,
-                              textDirection: TextDirection
-                                  .ltr, // set text direction to rtl
-                              text: const TextSpan(
-                                text: 'Decode',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color(0xff9FE870),
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const DecodePage()),
+                          );
+                        }, // Handle your callback
+                        child: Container(
+                          width: double.infinity,
+                          height: 228,
+                          decoration: BoxDecoration(
+                            color: const Color(0x6E839776),
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Color(0x33A5FF6A),
+                                blurRadius: 40.0,
+                                spreadRadius: 0,
+                                offset: Offset(
+                                  -2,
+                                  0,
                                 ),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                    text: '\nImage\n',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 10,
-                                      color: Colors.white,
-                                    ),
+                              )
+                            ],
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              const Padding(padding: EdgeInsets.all(8)),
+                              RichText(
+                                textAlign: TextAlign.left,
+                                textDirection: TextDirection
+                                    .ltr, // set text direction to rtl
+                                text: const TextSpan(
+                                  text: 'Decode',
+                                  style: TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.w600,
+                                    color: Color(0xff9FE870),
                                   ),
-                                ],
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                      text: '\nImage\n',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.normal,
+                                        fontSize: 14,
+                                        color: Color(0xffA5C58D),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                       Positioned(
-                        top: 12,
-                        left: 12,
+                        top: 16,
+                        left: 16,
                         child: Container(
-                          width: 40,
-                          height: 40,
+                          width: 50,
+                          height: 50,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             border: Border.all(
@@ -158,9 +207,9 @@ class homePage extends StatelessWidget {
                             ),
                           ),
                           child: const Icon(
-                            Icons.arrow_upward,
+                            Icons.arrow_downward,
                             color: Color(0xff9FE870),
-                            size: 24,
+                            size: 30,
                           ),
                         ),
                       ),
@@ -169,72 +218,86 @@ class homePage extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(
-              height: 30,
+
+            const Divider(
+              color: Color(0x809FE870),
+              height: 55,
+              thickness: 1,
+              indent: 90,
+              endIndent: 90,
             ),
 
             //recents
-            Container(
-              height: 82,
-              width: 448,
-              decoration: BoxDecoration(
-                color: const Color(0xff839776),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              padding: const EdgeInsets.all(10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  // Padding(padding: EdgeInsets.all(4)),
-                  Positioned(
-                    top: 28,
-                    left: 28,
-                    child: Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: Colors.white,
-                          width: 2,
-                        ),
+            InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const RecentPage()),
+                );
+              }, // Handle your callback
+              child: Container(
+                padding: const EdgeInsets.all(10),
+                width: double.infinity,
+                height: 82,
+                decoration: BoxDecoration(
+                  color: const Color(0x6E839776),
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color(0x33A5FF6A),
+                      blurRadius: 40.0,
+                      spreadRadius: 0,
+                      offset: Offset(
+                        -2,
+                        0,
                       ),
-                      alignment: Alignment.center,
-                      child: const Icon(
-                        Icons.history,
-                        color: Color(0xff9FE870),
-                        size: 24,
-                      ),
-                    ),
-                  ),
-
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(60, 0, 10, 0),
-                    child: RichText(
-                      textAlign: TextAlign.right,
-                      textDirection:
-                          TextDirection.ltr, // set text direction to rtl
-                      text: const TextSpan(
-                        text: 'Recents',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xff9FE870),
-                        ),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: '\nImage\n',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 10,
-                              color: Colors.white,
-                            ),
+                    )
+                  ],
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    // Padding(padding: EdgeInsets.all(4)),
+                    Positioned(
+                      top: 18,
+                      right: 58,
+                      child: Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: Colors.white,
+                            width: 2,
                           ),
-                        ],
+                        ),
+                        alignment: Alignment.center,
+                        child: const Icon(
+                          Icons.history,
+                          color: Color(0xff9FE870),
+                          size: 28,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+
+                    Container(
+                      padding: const EdgeInsets.all(6),
+                      child: RichText(
+                        textAlign: TextAlign.right,
+                        textDirection:
+                            TextDirection.ltr, // set text direction to rtl
+                        text: const TextSpan(
+                          text: 'Recents',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xff9FE870),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             )
           ],

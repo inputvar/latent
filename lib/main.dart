@@ -1,14 +1,19 @@
+// ignore_for_file: unused_import
+
 import 'package:flutter/material.dart';
 import 'package:latent/home.dart';
 import 'package:latent/splash.dart';
 import 'package:latent/logostart.dart';
-import 'package:latent/encodepage.dart';
+import 'package:latent/encode.dart';
+import 'package:latent/decode.dart';
 import 'package:latent/recentpage.dart';
+import 'package:latent/scroll.dart';
+//  import 'package:latent/newpage.dart';
 
-void main() => runApp(const MyApp());
+void main() => runApp(const Latent());
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key});
+class Latent extends StatelessWidget {
+  const Latent({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +44,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: Splash(),
+      home: const HomePage(),
     );
   }
 }

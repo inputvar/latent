@@ -1,170 +1,355 @@
 import 'package:flutter/material.dart';
 
-class Recent_page extends StatefulWidget {
-  const Recent_page({super.key});
+class RecentPage extends StatefulWidget {
+  const RecentPage({Key? key}) : super(key: key);
 
   @override
-  State<Recent_page> createState() => _Recent_pageState();
+  State<RecentPage> createState() => _RecentPageState();
 }
 
-class _Recent_pageState extends State<Recent_page> {
+class _RecentPageState extends State<RecentPage> {
+  String currentFilter = 'all';
+
   @override
   Widget build(BuildContext context) {
+    List<CustomCard> encodedCards = List.generate(
+        30, (index) => CustomCard(index: index, cardType: 'encoded'));
+    List<CustomCard> decodedCards = List.generate(
+        30, (index) => CustomCard(index: index, cardType: 'decoded'));
+
+    List<CustomCard> filteredCards = [];
+    if (currentFilter == 'all') {
+      filteredCards = List.from(encodedCards)..addAll(decodedCards);
+    } else if (currentFilter == 'encoded') {
+      filteredCards = encodedCards;
+    } else if (currentFilter == 'decoded') {
+      filteredCards = decodedCards;
+    }
+
     return Scaffold(
-      body: Container(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: <Widget>[
-            SizedBox(height: 15),
-            Align(
-              alignment: Alignment.topLeft,
-              child: IconButton(
-                icon: const Icon(
-                  Icons.arrow_back,
-                  size: 32,
+      backgroundColor: const Color(0xff131512),
+      body: ListView(
+        children: <Widget>[
+          Container(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              children: <Widget>[
+                const SizedBox(height: 10),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: IconButton(
+                    icon: const Icon(
+                      Icons.arrow_back,
+                      size: 32,
+                    ),
+                    color: const Color(0xff9FE870),
+                    onPressed: () {
+                      Navigator.pop(
+                        context,
+                      );
+                    },
+                  ),
                 ),
-                color: const Color(0xff9FE870),
-                onPressed: () {
-                  // go home
-                },
-              ),
-            ),
-            const SizedBox(height: 40),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(" Recent",
+                        style: Theme.of(context).textTheme.titleLarge),
+                    IconButton(
+                        onPressed: () {},
+                        padding: const EdgeInsets.all(8),
+                        icon: const Icon(
+                          Icons.info_outline,
+                          color: Color.fromARGB(255, 92, 98, 92),
+                          size: 30,
+                        ))
+                  ],
+                ),
                 Container(
-                  child: Text("Recents",
-                      style: Theme.of(context).textTheme.titleLarge),
+                  height: 20,
                 ),
-                IconButton(
-                    onPressed: () {},
-                    padding: const EdgeInsets.all(8),
-                    icon: const Icon(Icons.info_outline,
-                        color: Color.fromARGB(255, 178, 190, 177), size: 30))
-              ],
-            ),
-            Container(
-              padding: const EdgeInsets.all(10),
-              height: 20,
-            ),
-            Column(
-              children: [
                 Stack(
                   children: [
                     Container(
-                      padding: EdgeInsets.all(20),
+                      padding: const EdgeInsets.all(20),
                       width: double.infinity,
-                      height: 600,
+                      height: 60, // Adjusted to use available height
                       decoration: BoxDecoration(
-                        color: const Color(0xff839776),
+                        color: const Color(0x6E839776),
                         borderRadius: BorderRadius.circular(20),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Color(0x33A5FF6A),
+                            blurRadius: 40.0,
+                            spreadRadius: 0,
+                            offset: Offset(
+                              -2,
+                              0,
+                            ),
+                          )
+                        ],
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.all(20),
-                      child: Column(
-                        children: [
-                          Positioned(
-                            top: 0,
-                            bottom: 320,
-                            left: 17,
-                            right: 0,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    primary:
-                                        const Color.fromARGB(150, 74, 153, 119),
+                      padding: const EdgeInsets.all(10),
+                      child: SizedBox(
+                        height: 40,
 
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(32.0)),
-                                    side: const BorderSide(
-                                        width: 3,
-                                        color:
-                                            Color.fromARGB(255, 255, 255, 255)),
-                                    minimumSize:
-                                        const Size(50, 40), //////// HERE
+                        // Set your desired fixed header height
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Expanded(
+                              child: InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    currentFilter = 'all';
+                                  });
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                    color: currentFilter == 'all'
+                                        ? const Color(0xFF232820)
+                                        : const Color(0x50232820),
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
-                                  onPressed: () {},
-                                  child: const Text('All'),
-                                ),
-                                const SizedBox(width: 10),
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    primary:
-                                        const Color.fromARGB(150, 74, 153, 119),
-
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(32.0)),
-                                    side: const BorderSide(
-                                        width: 3,
-                                        color:
-                                            Color.fromARGB(255, 255, 255, 255)),
-                                    minimumSize:
-                                        const Size(50, 40), //////// HERE
+                                  child: Center(
+                                    child: Text(
+                                      'All',
+                                      style: TextStyle(
+                                        color: currentFilter == 'all'
+                                            ? Colors.white
+                                            : const Color(0xffA5C58D),
+                                        fontSize: 14,
+                                      ),
+                                    ),
                                   ),
-                                  onPressed: () {},
-                                  child: const Text('Encode'),
-                                ),
-                                const SizedBox(width: 10),
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    primary:
-                                        const Color.fromARGB(150, 74, 153, 119),
-
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(32.0)),
-                                    side: const BorderSide(
-                                        width: 3,
-                                        color:
-                                            Color.fromARGB(255, 255, 255, 255)),
-                                    minimumSize:
-                                        const Size(50, 40), //////// HERE
-                                  ),
-                                  onPressed: () {},
-                                  child: const Text('Decode'),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-                          Positioned(
-                            top: 0,
-                            left: 0,
-                            right: 0,
-                            child: Align(
-                              alignment: Alignment.topCenter,
-                              child: Container(
-                                padding: EdgeInsets.all(20),
-                                height: 200,
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  color: const Color(0xff163300),
-                                  borderRadius: BorderRadius.circular(20),
                                 ),
                               ),
                             ),
-                          ),
-                          const SizedBox(height: 20),
-                          Positioned(
-                            top: 0,
-                            left: 0,
-                            right: 0,
-                            child: Align(
-                              alignment: Alignment.topCenter,
-                              child: Container(
-                                padding: EdgeInsets.all(20),
-                                height: 200,
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  color: const Color(0xff163300),
-                                  borderRadius: BorderRadius.circular(20),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Expanded(
+                              child: InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    currentFilter = 'encoded';
+                                  });
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                    color: currentFilter == 'encoded'
+                                        ? const Color(0xFF232820)
+                                        : const Color(0x50232820),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      'Encoded',
+                                      style: TextStyle(
+                                        color: currentFilter == 'encoded'
+                                            ? Colors.white
+                                            : const Color(0xffA5C58D),
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ),
                                 ),
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Expanded(
+                              child: InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    currentFilter = 'decoded';
+                                  });
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                    color: currentFilter == 'decoded'
+                                        ? const Color(0xFF232820)
+                                        : const Color(0x50232820),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      'Decoded',
+                                      style: TextStyle(
+                                        color: currentFilter == 'decoded'
+                                            ? Colors.white
+                                            : const Color(0xffA5C58D),
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Container(
+                  height: 20,
+                ),
+                Stack(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(20),
+                      width: double.infinity,
+                      height: 550, // Adjusted to use available height
+                      decoration: BoxDecoration(
+                        color: const Color(0x6E839776),
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Color(0x33A5FF6A),
+                            blurRadius: 40.0,
+                            spreadRadius: 0,
+                            offset: Offset(
+                              -2,
+                              0,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        children: [
+                          Align(
+                            alignment: Alignment.topCenter,
+                            child: Container(
+                              padding: const EdgeInsets.all(20),
+                              height: 210,
+                              width: 330,
+                              decoration: BoxDecoration(
+                                color: const Color(0x75131512),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Row(
+                                children: [
+                                  Stack(
+                                    children: [
+                                      const Text(
+                                        "Imag1.png",
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w300,
+                                            color: Color(0xffA5C58D)),
+                                      ),
+                                      Container(
+                                        width: 175,
+                                        height: 175,
+                                        decoration: ShapeDecoration(
+                                          image: const DecorationImage(
+                                            image: NetworkImage(
+                                                "https://via.placeholder.com/175x175"),
+                                            fit: BoxFit.fill,
+                                          ),
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    width: 17,
+                                  ),
+                                  Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      InkWell(
+                                        onTap: () {}, // Handle your callback
+
+                                        child: Container(
+                                          width: 98,
+                                          height: 50,
+                                          padding: const EdgeInsets.all(10),
+                                          decoration: ShapeDecoration(
+                                            color: const Color(0xFF232820),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                          ),
+                                          child: const Center(
+                                            child: Text(
+                                              'Details',
+                                              style: TextStyle(
+                                                color: Color(0xFF9FE870),
+                                                fontSize: 14,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      InkWell(
+                                        onTap: () {}, // Handle your callback
+
+                                        child: Container(
+                                          width: 98,
+                                          height: 50,
+                                          padding: const EdgeInsets.all(10),
+                                          decoration: ShapeDecoration(
+                                            color: const Color(0xFF232820),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                          ),
+                                          child: const Center(
+                                            child: Text(
+                                              'Share',
+                                              style: TextStyle(
+                                                color: Color(0xFF9FE870),
+                                                fontSize: 14,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      InkWell(
+                                        onTap: () {}, // Handle your callback
+
+                                        child: Container(
+                                          width: 98,
+                                          height: 50,
+                                          padding: const EdgeInsets.all(10),
+                                          decoration: ShapeDecoration(
+                                            color: const Color(0xFF232820),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
+                                          ),
+                                          child: const Center(
+                                            child: Text(
+                                              'Delete',
+                                              style: TextStyle(
+                                                color: Color(0xFFCB2020),
+                                                fontSize: 14,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
                               ),
                             ),
                           ),
@@ -174,10 +359,45 @@ class _Recent_pageState extends State<Recent_page> {
                   ],
                 ),
               ],
-            )
-          ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class CustomCard extends StatelessWidget {
+  final int index;
+  final String cardType;
+
+  const CustomCard({super.key, required this.index, this.cardType = 'all'});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 100.0,
+      margin: const EdgeInsets.all(8.0),
+      decoration: BoxDecoration(
+        color: cardType == 'encoded'
+            ? Colors.green
+            : cardType == 'decoded'
+                ? Colors.orange
+                : Colors.blue,
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      child: Center(
+        child: Text(
+          'Card $index (${cardType.capitalize()})',
+          style: const TextStyle(color: Colors.white),
         ),
       ),
     );
+  }
+}
+
+extension StringExtension on String {
+  String capitalize() {
+    return "${this[0].toUpperCase()}${substring(1)}";
   }
 }

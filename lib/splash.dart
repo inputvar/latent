@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
+import 'home.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key});
+  const SplashScreen({Key? key}) : super(key: key);
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -9,23 +11,35 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   @override
+  void initState() {
+    super.initState();
+    Timer(const Duration(seconds: 3), () {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (context) => const HomePage()), // corrected class name
+      );
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 34, 81, 00),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Padding(padding: EdgeInsets.all(20)),
+          const SizedBox(
+            height: 70,
+          ),
+          const Padding(padding: EdgeInsets.all(20)),
           Image.asset(
             'assets/plane.png',
-            width: 300,
-            height: 300,
+            width: 450,
+            height: 450,
           ),
-          SizedBox(height: 6),
           RichText(
-            textAlign: TextAlign.left,
-            text: TextSpan(
+            textAlign: TextAlign.center,
+            text: const TextSpan(
               text: 'Send Images but with \na',
               style: TextStyle(
                   fontSize: 28,
@@ -35,8 +49,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 TextSpan(
                     text: ' Hidden',
                     style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 38, 52, 36))),
+                        fontWeight: FontWeight.bold, color: Color(0x3DF8FFF3))),
                 TextSpan(text: ' Message \nInside!'),
               ],
             ),
@@ -47,12 +60,12 @@ class _SplashScreenState extends State<SplashScreen> {
         ],
       ),
       floatingActionButton: Padding(
-        padding: EdgeInsets.only(bottom: 30, right: 30),
+        padding: const EdgeInsets.only(bottom: 30, right: 30),
         child: ElevatedButton(
           onPressed: () {
             // Navigate to the next screen
           },
-          child: Text(
+          child: const Text(
             'Let\'s Start',
             style: TextStyle(
               color: Colors.black,
